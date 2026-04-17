@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Abdalla Mohamed — Marketing Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=JetBrains+Mono:wght@300;400;500&family=Inter+Tight:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shared.css">
+<style>
+  .hero {
+    min-height: 100vh;
+    padding: 140px 40px 60px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-top { display: grid; grid-template-columns: 1fr 320px; gap: 60px; align-items: start; }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(64px, 13vw, 220px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .hero h1 .it { font-style: italic; font-weight: 400; color: var(--accent); }
+  .hero h1 .and {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.55em;
+    vertical-align: 0.25em;
+    color: var(--ink-soft);
+  }
+  .hero-right { display: flex; flex-direction: column; gap: 24px; }
+  .hero-portrait {
+    aspect-ratio: 1 / 1.15;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--ink);
+    position: relative;
+  }
+  .hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    filter: contrast(1.02) saturate(0.95);
+  }
+  .hero-meta {
+    padding-top: 18px;
+    border-top: 1px solid var(--ink);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .hero-meta p + p { margin-top: 16px; }
+  .hero-meta strong { color: var(--ink); font-weight: 500; }
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding-top: 40px;
+    margin-top: 40px;
+    border-top: 1px solid var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hero-bottom .label { color: var(--ink-soft); margin-bottom: 6px; }
+  .hero-bottom .val {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+  .hero-bottom .val .num { font-weight: 700; }
+
+  .work-intro {
+    grid-column: 2;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 55ch;
+    margin-top: 16px;
+  }
+  .case {
+    border-top: 1px solid var(--ink);
+    padding: 40px 0;
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 40px;
+    cursor: pointer;
+    transition: background 0.4s ease, padding 0.4s ease;
+    color: inherit;
+  }
+  .case:hover { background: var(--paper); padding: 40px 20px; }
+  .case:last-of-type { border-bottom: 1px solid var(--ink); }
+  .case-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); padding-top: 10px; }
+  .case-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 4.5vw, 60px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .case-title .it { font-style: italic; color: var(--accent); }
+  .case-title .arrow {
+    display: inline-block;
+    margin-left: 12px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    color: var(--accent);
+    font-style: normal;
+  }
+  .case:hover .case-title .arrow { opacity: 1; transform: translateX(0); }
+  .case-meta { font-size: 14px; line-height: 1.7; color: var(--ink-soft); padding-top: 8px; }
+  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .case-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .case-desc { margin-top: 12px; font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+
+  .featured { background: var(--ink); color: var(--bg); padding: 120px 40px; margin: 80px 0; }
+  .featured .section-number, .featured .section-title, .featured p { color: var(--bg); }
+  .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .featured-visual {
+    aspect-ratio: 16/10;
+    background: var(--ink);
+    overflow: hidden;
+    border-radius: 2px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .featured-visual img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .featured-content .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .featured-content h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .featured-content h3 em { color: var(--accent); font-weight: 400; }
+  .featured-content .body {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(243,239,231,0.75);
+    max-width: 50ch;
+  }
+  .featured-content .body + .body { margin-top: 16px; }
+  .metric-row {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(243,239,231,0.2);
+  }
+  .metric .val {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--bg);
+  }
+  .metric .val em { font-style: italic; color: var(--accent); }
+  .metric .label {
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(243,239,231,0.5);
+  }
+  .featured-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    padding: 14px 22px;
+    border: 1px solid rgba(243,239,231,0.3);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--bg);
+    transition: all 0.3s ease;
+  }
+  .featured-cta:hover { background: var(--accent); border-color: var(--accent); transform: translateX(4px); }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
+  .about-visual {
+    position: sticky;
+    top: 120px;
+    aspect-ratio: 3/4;
+    background: var(--accent-2);
+    overflow: hidden;
+    border-radius: 2px;
+    display: flex;
+    align-items: flex-end;
+    padding: 32px;
+  }
+  .about-visual svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .about-visual .tag {
+    position: relative;
+    z-index: 2;
+    color: var(--bg);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .about-text .pull {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(28px, 3.5vw, 44px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  .about-text .pull em { color: var(--accent); font-weight: 400; }
+  .about-text p { font-size: 16px; line-height: 1.7; margin-bottom: 20px; color: var(--ink-soft); }
+  .about-text p strong { color: var(--ink); font-weight: 500; }
+
+  .capabilities {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .cap { background: var(--bg); padding: 24px 20px; }
+  .cap .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .cap .name { font-family: 'Fraunces', serif; font-size: 20px; letter-spacing: -0.01em; }
+  .cap .year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+  .cap .desc { font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+
+  .experience { background: var(--paper); }
+  .exp-list { border-top: 1px solid var(--ink); }
+  .exp-row {
+    display: grid;
+    grid-template-columns: 140px 1.5fr 2fr 140px;
+    gap: 40px;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(20,20,20,0.15);
+    align-items: start;
+  }
+  .exp-row .year { font-family: 'JetBrains Mono', monospace; font-size: 13px; padding-top: 8px; color: var(--ink); }
+  .exp-row .role {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .exp-row .role .company {
+    display: block;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  .exp-row .detail { font-size: 14px; line-height: 1.6; color: var(--ink-soft); padding-top: 10px; }
+  .exp-row .location {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    padding-top: 12px;
+    text-align: right;
+  }
+
+  .clients {
+    padding: 80px 40px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    overflow: hidden;
+  }
+  .clients h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
+  .client-marquee {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: scroll 30s linear infinite;
+  }
+  .client-marquee span {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 60px;
+  }
+  .client-marquee span::after { content: "✦"; color: var(--accent); font-size: 0.5em; }
+  .client-marquee span.it { font-style: italic; color: var(--ink-soft); }
+
+  @media (max-width: 900px) {
+    .hero { padding: 100px 20px 40px; }
+    .hero-top { grid-template-columns: 1fr; gap: 30px; }
+    .hero-bottom { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .work-intro { grid-column: 1; }
+    .case { grid-template-columns: 1fr; gap: 16px; padding: 28px 0; }
+    .case:hover { padding: 28px 0; background: transparent; }
+    .featured, .about-grid { padding-left: 20px; padding-right: 20px; }
+    .featured-grid, .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-visual { position: relative; top: 0; aspect-ratio: 1; }
+    .exp-row { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+    .exp-row .location { text-align: left; padding-top: 4px; }
+    .capabilities { grid-template-columns: 1fr; }
+    .metric-row { grid-template-columns: 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="logo">Abdalla <span>•</span> M.</a>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="availability"><span class="dot"></span><span>Open for work</span></div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-top">
+    <h1>
+      Marketing<br>
+      that moves <span class="it">money,</span><br>
+      <span class="and">&amp;</span> tells the truth.
+    </h1>
+    <div class="hero-right">
+      <div class="hero-portrait">
+        <img src="images/abdalla_portrait.jpg" alt="Abdalla Mohamed">
+      </div>
+      <div class="hero-meta">
+        <p><strong>Abdalla Mohamed</strong> — a Digital Marketing Strategist working across brand, content, and business analytics.</p>
+        <p>3+ years operating on both sides of the table: in-house at a 20+ branch F&amp;B group, and agency-side across F&amp;B, real estate, cosmetics, fitness, and education.</p>
+        <p>Based in Cairo. Working globally.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <div><div class="label">Based in</div><div class="val">Cairo, EG</div></div>
+    <div><div class="label">Experience</div><div class="val"><span class="num">3+</span> years</div></div>
+    <div><div class="label">Accounts managed</div><div class="val"><span class="num">5+</span> brands</div></div>
+    <div><div class="label">Status</div><div class="val">Available · 2026</div></div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Brand Strategy</span><span class="star">✦</span>
+    <span>Content Planning</span><span class="star">✦</span>
+    <span>Campaign Execution</span><span class="star">✦</span>
+    <span>Marketing Analytics</span><span class="star">✦</span>
+    <span>Copywriting</span><span class="star">✦</span>
+    <span>Brand Strategy</span><span class="star">✦</span>
+    <span>Content Planning</span><span class="star">✦</span>
+    <span>Campaign Execution</span><span class="star">✦</span>
+    <span>Marketing Analytics</span><span class="star">✦</span>
+    <span>Copywriting</span><span class="star">✦</span>
+    <span>Brand Strategy</span><span class="star">✦</span>
+    <span>Content Planning</span><span class="star">✦</span>
+  </div>
+</div>
+
+<section id="work">
+  <div class="section-head reveal">
+    <div class="section-number">(01) — Selected Work</div>
+    <div>
+      <h2 class="section-title">A short list of <em>proud</em> work.</h2>
+      <p class="work-intro">Strategy, content systems, and brand work — from full rebrands to Ramadan tents to monthly content calendars. These are the projects where the thinking shows up on the receipts.</p>
+    </div>
+  </div>
+
+  <div class="cases">
+
+    <a class="case reveal" href="tabali.html">
+      <div class="case-num">01 / 06</div>
+      <div>
+        <div class="case-title">Tabali <span class="it">Rebrand.</span> <span class="arrow">→</span></div>
+        <div class="case-desc">Supported the rebrand of a 20+ branch Egyptian bistro — refreshing the visual language for a younger audience without losing authenticity. Coordinated with external agencies on identity, positioning, and the launch of a subsidiary brand.</div>
+      </div>
+      <div class="case-meta">
+        <div>Client · Tabali Bistro</div>
+        <div>Role · In-house lead</div>
+        <div>Year · 2024</div>
+        <div class="case-tags">
+          <span class="case-tag">Brand Strategy</span>
+          <span class="case-tag">Identity</span>
+          <span class="case-tag">F&amp;B</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="case reveal" href="ark.html">
+      <div class="case-num">02 / 06</div>
+      <div>
+        <div class="case-title">The Ark <span class="it">Ramadan Tent.</span> <span class="arrow">→</span></div>
+        <div class="case-desc">Contributed to planning and strategy for Tabali's Ramadan tent — a premium Iftar and Suhoor destination co-branded as "Tabali × The Ark." Spanning venue narrative, guest experience, giveaways, and out-of-home campaigns.</div>
+      </div>
+      <div class="case-meta">
+        <div>Client · Tabali × The Ark</div>
+        <div>Role · Planning &amp; strategy</div>
+        <div>Year · 2025</div>
+        <div class="case-tags">
+          <span class="case-tag">Seasonal</span>
+          <span class="case-tag">Experiential</span>
+          <span class="case-tag">F&amp;B</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="case reveal" href="sabha.html">
+      <div class="case-num">03 / 06</div>
+      <div>
+        <div class="case-title">Sabha <span class="it">Company Profile.</span> <span class="arrow">→</span></div>
+        <div class="case-desc">Positioning and narrative for an Egyptian cuisine concept — "fresh Egyptian food, done right." Built the brand story around authenticity, hospitality, consistency, and community.</div>
+      </div>
+      <div class="case-meta">
+        <div>Client · Sabha</div>
+        <div>Role · Strategy &amp; copy</div>
+        <div>Year · 2025</div>
+        <div class="case-tags">
+          <span class="case-tag">Positioning</span>
+          <span class="case-tag">Copywriting</span>
+          <span class="case-tag">Brand Narrative</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="case reveal" href="analog.html">
+      <div class="case-num">04 / 06</div>
+      <div>
+        <div class="case-title">Analog <span class="it">Reformer Pilates.</span> <span class="arrow">→</span></div>
+        <div class="case-desc">Two-week social content calendar and voice direction for a reformer pilates studio. Tone built around quiet, physical detail — the sound of vinyl, the warmth of wood, the resistance of steel springs.</div>
+      </div>
+      <div class="case-meta">
+        <div>Client · Analog (via HG)</div>
+        <div>Role · Content strategist</div>
+        <div>Year · 2026</div>
+        <div class="case-tags">
+          <span class="case-tag">Content Calendar</span>
+          <span class="case-tag">TOV</span>
+          <span class="case-tag">Fitness</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="case reveal" href="eastview.html">
+      <div class="case-num">05 / 06</div>
+      <div>
+        <div class="case-title">East View Mall <span class="it">Ramadan.</span> <span class="arrow">→</span></div>
+        <div class="case-desc">Campaign and content plan for a mall's Ramadan season — spanning bazaar activations, F&amp;B partners like Mousa Seafood, and a visual system that made Iftar feel like a destination.</div>
+      </div>
+      <div class="case-meta">
+        <div>Client · East View Mall (via HG)</div>
+        <div>Role · Strategist &amp; copy</div>
+        <div>Year · 2026</div>
+        <div class="case-tags">
+          <span class="case-tag">Campaign</span>
+          <span class="case-tag">Real Estate</span>
+          <span class="case-tag">Seasonal</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="case reveal" href="ralphs.html">
+      <div class="case-num">06 / 06</div>
+      <div>
+        <div class="case-title">Ralph's German Bakery <span class="it">January.</span> <span class="arrow">→</span></div>
+        <div class="case-desc">Monthly content plan for a bakery brand — balancing product storytelling with seasonal hooks. Full calendar of feed posts, stories, and reels.</div>
+      </div>
+      <div class="case-meta">
+        <div>Client · Ralph's Bakery (via HG)</div>
+        <div>Role · Strategist</div>
+        <div>Year · 2026</div>
+        <div class="case-tags">
+          <span class="case-tag">Content Calendar</span>
+          <span class="case-tag">F&amp;B</span>
+          <span class="case-tag">Monthly Plan</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section class="featured">
+  <div class="section-head reveal" style="margin-bottom: 60px;">
+    <div class="section-number" style="color: rgba(243,239,231,0.5);">(Case Study 01) — In focus</div>
+    <div></div>
+  </div>
+
+  <div class="featured-grid">
+    <div class="featured-visual reveal">
+      <img src="images/tabali_2.jpg" alt="Tabali rebrand packaging">
+    </div>
+
+    <div class="featured-content">
+      <div class="kicker reveal">Case Study — Tabali Bistro</div>
+      <h3 class="reveal">Refreshing a <em>20+ branch</em> Egyptian bistro.</h3>
+      <p class="body reveal">Tabali is a pillar of Egyptian authentic cuisine. The brief: refresh the brand for a younger audience without losing the authenticity that made it beloved in the first place.</p>
+      <p class="body reveal">We kept the brand's overall visual equity and iconography — but revolutionized the visual style, fonts, colors, and wordmark. A minimal hieroglyphics direction kept the brand grounded, while giving it room to breathe across new touchpoints and sub-brands.</p>
+      <p class="body reveal">My role: managing the external agencies, reviewing deliverables, ensuring consistency across 20+ branches, and coordinating the launch of a subsidiary brand alongside the main rebrand.</p>
+
+      <div class="metric-row reveal">
+        <div class="metric"><div class="val">20<em>+</em></div><div class="label">Branches</div></div>
+        <div class="metric"><div class="val">5–8<em>%</em></div><div class="label">Monthly engagement growth</div></div>
+        <div class="metric"><div class="val">1M<em>+</em></div><div class="label">EGP in sponsorship cost savings</div></div>
+      </div>
+
+      <a href="tabali.html" class="featured-cta reveal">Read the full case study <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-head reveal">
+    <div class="section-number">(02) — About</div>
+    <div>
+      <h2 class="section-title">Operator-first, <em>strategist</em> always.</h2>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0a2e2a"/>
+            <stop offset="100%" stop-color="#143f3a"/>
+          </linearGradient>
+        </defs>
+        <rect width="300" height="400" fill="url(#grad1)"/>
+        <circle cx="150" cy="160" r="100" fill="none" stroke="#f3efe7" stroke-width="1" opacity="0.3"/>
+        <circle cx="150" cy="160" r="70" fill="none" stroke="#f3efe7" stroke-width="1" opacity="0.5"/>
+        <circle cx="150" cy="160" r="40" fill="#ff3b1f"/>
+        <line x1="0" y1="280" x2="300" y2="280" stroke="#f3efe7" stroke-width="0.5" opacity="0.3"/>
+        <text x="20" y="55" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="2" fill="#f3efe7" opacity="0.6">N 30°02'40"</text>
+        <text x="20" y="70" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="2" fill="#f3efe7" opacity="0.6">E 31°14'08"</text>
+        <text x="280" y="55" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="2" fill="#f3efe7" opacity="0.6">CAI / 2026</text>
+      </svg>
+      <div class="tag">"Strategy only<br>matters when it<br>ships."</div>
+    </div>
+
+    <div class="about-text">
+      <p class="pull reveal">I've spent the last three years inside an F&amp;B business that grew past 20 branches — watching <em>what actually moves numbers</em>, not what looks good in a deck.</p>
+
+      <p class="reveal">That's the shape of how I work. I've sat in <strong>executive strategy meetings</strong> contributing to decisions on marketing direction, franchising, and business growth. I've produced daily reports on revenue, costs, and P&amp;L that went directly to the CEO. I've also built content calendars, negotiated sponsorship deals, and coordinated with external agencies on brand work.</p>
+
+      <p class="reveal">Most marketers pick a lane — brand or performance, agency or in-house, creative or analytical. I haven't, because the work I'm proudest of required all of it. The Tabali rebrand needed a creative brief <strong>and</strong> a franchise operations lens. The Ark — our Ramadan tent — needed a guest experience story <strong>and</strong> a sponsorship negotiation. Content calendars for 5+ client accounts at HG need a strategist who can also write the copy.</p>
+
+      <p class="reveal">On the side, I <strong>freelance internationally</strong> as a marketing consultant — advising senior marketing managers and brand owners on brand strategy, campaign planning, and go-to-market positioning. I also recently completed my <strong>BBA at Coventry University</strong> — senior year average A*.</p>
+
+      <div class="capabilities reveal">
+        <div class="cap">
+          <div class="head"><div class="name">Brand Strategy</div><div class="year">2022—</div></div>
+          <div class="desc">Positioning, brand architecture, identity direction, rebrand management.</div>
+        </div>
+        <div class="cap">
+          <div class="head"><div class="name">Content Systems</div><div class="year">2022—</div></div>
+          <div class="desc">Monthly calendars, tone of voice, copywriting, platform-native planning.</div>
+        </div>
+        <div class="cap">
+          <div class="head"><div class="name">Campaign Planning</div><div class="year">2023—</div></div>
+          <div class="desc">Seasonal &amp; always-on campaigns across social, paid, and on-ground activations.</div>
+        </div>
+        <div class="cap">
+          <div class="head"><div class="name">Analytics &amp; Reporting</div><div class="year">2022—</div></div>
+          <div class="desc">P&amp;L, revenue and cost reporting, platform analytics, CEO-level dashboards.</div>
+        </div>
+        <div class="cap">
+          <div class="head"><div class="name">Agency Management</div><div class="year">2022—</div></div>
+          <div class="desc">Briefing, reviewing, and directing external creative and branding partners.</div>
+        </div>
+        <div class="cap">
+          <div class="head"><div class="name">Freelance Consulting</div><div class="year">2024—</div></div>
+          <div class="desc">Advising international brand owners on strategy, campaigns, and positioning.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="experience" id="experience">
+  <div class="section-head reveal">
+    <div class="section-number">(03) — Experience</div>
+    <div>
+      <h2 class="section-title">Where the <em>work</em> happened.</h2>
+    </div>
+  </div>
+
+  <div class="exp-list">
+
+    <div class="exp-row reveal">
+      <div class="year">2025 — Now</div>
+      <div class="role">
+        Marketing Strategist
+        <span class="company">HG Advertising</span>
+      </div>
+      <div class="detail">
+        Content strategy and campaign planning for 5+ client accounts across F&amp;B, real estate, cosmetics, fitness, and education. Writing copy, building content calendars, developing brand strategies. Contributing to branding projects and ensuring consistency across all client deliverables.
+      </div>
+      <div class="location">Cairo · Agency</div>
+    </div>
+
+    <div class="exp-row reveal">
+      <div class="year">2022 — Now</div>
+      <div class="role">
+        Marketing &amp; Operations Assistant
+        <span class="company">Tabali Bistro</span>
+      </div>
+      <div class="detail">
+        Led content calendar planning driving 5–8% monthly engagement growth. Managed external agencies. Secured 5+ sponsorship deals contributing to 1M+ EGP in cost savings. Produced daily P&amp;L reports for the CEO. Supported the Tabali rebrand and a subsidiary brand launch. Contributed to the planning and strategy of the Ramadan tent "The Ark." Shadowed the CEO on strategic initiatives, franchising, and KPI tracking.
+      </div>
+      <div class="location">Cairo · In-house</div>
+    </div>
+
+    <div class="exp-row reveal">
+      <div class="year">2024 — Now</div>
+      <div class="role">
+        Marketing Consultant
+        <span class="company">Freelance</span>
+      </div>
+      <div class="detail">
+        Consulting senior marketing managers and brand owners internationally on brand strategy, campaign planning, and go-to-market positioning. One-on-one advisory sessions with clients across varying markets and industries.
+      </div>
+      <div class="location">Remote · Global</div>
+    </div>
+
+    <div class="exp-row reveal">
+      <div class="year">2022 — 2026</div>
+      <div class="role">
+        BBA, Business Administration
+        <span class="company">Coventry University</span>
+      </div>
+      <div class="detail">
+        Graduated April 2026. Senior year average grade: A*.
+      </div>
+      <div class="location">UK · Education</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="clients">
+  <h4>Brands worked with</h4>
+  <div class="client-marquee">
+    <span>Tabali Bistro</span><span class="it">The Ark</span>
+    <span>Sabha</span><span class="it">Analog Pilates</span>
+    <span>Ralph's Bakery</span><span class="it">East View Mall</span>
+    <span>Mousa Seafood</span><span class="it">HG Advertising</span>
+    <span>Tabali Bistro</span><span class="it">The Ark</span>
+    <span>Sabha</span><span class="it">Analog Pilates</span>
+    <span>Ralph's Bakery</span><span class="it">East View Mall</span>
+    <span>Mousa Seafood</span><span class="it">HG Advertising</span>
+  </div>
+</div>
+
+<section class="contact" id="contact">
+  <div class="section-number reveal" style="color: rgba(243,239,231,0.5); margin-bottom: 40px;">(04) — Let's talk</div>
+
+  <h2 class="contact-huge reveal">Got a brand<br>that deserves<br><em>better?</em></h2>
+
+  <a href="mailto:abdullahosmann05@gmail.com" class="contact-cta reveal">Start a conversation <span class="arrow">→</span></a>
+
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <div class="label">Email</div>
+      <div class="val"><a href="mailto:abdullahosmann05@gmail.com">abdullahosmann05<br>@gmail.com</a></div>
+    </div>
+    <div class="contact-card reveal">
+      <div class="label">Phone</div>
+      <div class="val"><a href="tel:+201102330055">+20 110 233 0055</a></div>
+    </div>
+    <div class="contact-card reveal">
+      <div class="label">Elsewhere</div>
+      <div class="val">
+        <a href="https://www.linkedin.com/in/abdullah-mohamed-520355246" target="_blank" rel="noopener">LinkedIn</a> ·
+        <a href="https://www.instagram.com/abdullahosmann_/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>© 2026 Abdalla Mohamed · All rights reserved</div>
+    <div>Cairo · 30.0444° N, 31.2357° E</div>
+    <div>Last updated · April 2026</div>
+  </footer>
+</section>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  document.querySelectorAll('.featured-content .reveal, .about-text .reveal, .hero-bottom > div').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 60}ms`;
+  });
+</script>
+
+</body>
+</html>
